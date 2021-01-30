@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 
-const CapabilityStock = ({value, numberOfClicksPerStockIncrease}) => {
+const CapabilityStock = ({value = 0, numberOfClicksPerStockIncrease = 1}) => {
     const [computedValue, setComputedValue] = useState(value);
     const [clickCount, setClickCount] = useState(0)
 
@@ -16,12 +16,18 @@ const CapabilityStock = ({value, numberOfClicksPerStockIncrease}) => {
         }
     }, [computedValue, clickCount, numberOfClicksPerStockIncrease])
 
+    const renderClickDifferentialText = () => {
+        const differenceBetweenCurrentAndRequiredClicks = numberOfClicksPerStockIncrease - clickCount
+        const clickGrammarText = differenceBetweenCurrentAndRequiredClicks > 1 ? "clicks" : "click"
+        return `${differenceBetweenCurrentAndRequiredClicks} ${clickGrammarText} until Capability Point (CP) generated`
+    }
+
     return (
-        <button type="button" className="stock" onClick={incrementClickCount}>
+        <button type="button" className="stock stock--capability" onClick={incrementClickCount}>
             <h2>Capability Stock</h2>
             <p>The amount of 'resource' you have to work on things</p>
             <h3>Current value: {computedValue}</h3>
-            <p>Cost: {numberOfClicksPerStockIncrease} clicks per capability increase</p>
+            <p>{renderClickDifferentialText()}</p>
         </button>
     )
 }

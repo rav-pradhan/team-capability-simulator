@@ -23,8 +23,8 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  grid-column-gap: var(--s0);
-  grid-row-gap: var(--s0);
+  grid-column-gap: var(--s5);
+  grid-row-gap: var(--s3);
 }
 
 .flow-layout> :nth-child(1) {
@@ -44,8 +44,10 @@
 }
 
 .stock {
-  --background-colour: green;
-  --hover-colour: darkgreen;
+  --capability-colour: green;
+  --capability-hover-colour: darkgreen;
+  --feature-colour: blue;
+  --feature-hover-colour: darkblue;
   --font-colour-light: #fff;
   --font-colour-dark: #000;
 
@@ -57,5 +59,23 @@
 
 .stock:hover {
   cursor: pointer;
-  background-color: var(--hover-colour);
+  background-color: var(--capability-hover-colour);
+}
+
+.stock--capability {
+  background-color: var(--capability-colour);
+}
+
+.stock--capability:hover {
+  cursor: pointer;
+  background-color: var(--capability-hover-colour);
+}
+
+.stock--feature {
+  background-color: var(--feature-colour);
+}
+
+.stock--feature:hover {
+  cursor: pointer;
+  background-color: var(--feature-hover-colour);
 }
