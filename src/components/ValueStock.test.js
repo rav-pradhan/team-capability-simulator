@@ -10,7 +10,7 @@ describe("Value Stock - Feature", () => {
 
   test("that the component displays the current value of the Feature stock", () => {
     render(<ValueStock name={"Feature Stock"} currentValue={5} />);
-    const valuePresentation = screen.getByText("Current value: 5");
+    const valuePresentation = screen.getByText("5");
     expect(valuePresentation).toBeInTheDocument();
   });
 
@@ -34,7 +34,7 @@ describe("Value Stock - Feature", () => {
         name="feature"
         currentValue={5}
         requiredCapability={3}
-        stockStyleModifier="feature"
+        styleModifier="feature"
       />
     );
     expect(container.getElementsByTagName("button")[0]).toHaveClass("stock--feature")

@@ -24,10 +24,10 @@ const CapabilityStock = ({value = 0, numberOfClicksPerStockIncrease = 1}) => {
 
     return (
         <button type="button" className="stock stock--capability" onClick={incrementClickCount}>
-            <h2>Capability Stock</h2>
+            <h2>{computedValue}</h2>
+            <h3>Capability Stock</h3>
             <p>The amount of 'resource' you have to work on things</p>
-            <h3>Current value: {computedValue}</h3>
-            <p>{renderClickDifferentialText()}</p>
+            <p><strong>{renderClickDifferentialText()}</strong></p>
         </button>
     )
 }
