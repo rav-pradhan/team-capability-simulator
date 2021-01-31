@@ -35,7 +35,7 @@ const CustomerSatisfactionStock = ({ value = 74 }) => {
       calculateSatisfactionDescription(computedValue);
     }, 1000);
     return () => clearInterval(interval);
-  }, [computedValue]);
+  }, [value, computedValue]);
 
   return (
     <button type="button" className="stock stock--customer-satisfaction" disabled>

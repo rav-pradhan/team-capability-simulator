@@ -1,36 +1,67 @@
+import React, { useState, useEffect } from 'react';
 import CapabilityStock from "./components/CapabilityStock";
 import ValueStock from "./components/ValueStock";
 import CustomerSatisfactionStock from "./components/CustomerSatisfactionStock";
 
 const valueStockMetadata = {
   feature: {
-    name: "Feature Stock",
+    name: "Feature",
     description: "The amount of value-adding features in your software",
     styleModifier: "feature",
   },
   infrastructure: {
-    name: "Infrastructure Stock",
+    name: "Infrastructure",
     description:
-      "The robustness and resilience of your platform infrastructure and developer workflows",
+      "The maturity of your infrastructure, team collaboration, removing tech debt etc.",
     styleModifier: "infrastructure",
   },
 };
 
 const SystemSimulator = () => {
+  const [capabilityStock, setCapabilityStock] = useState(10);
+  const [capabilityStockClickRequirement, setCapabilityStockClickRequirement] = useState(1)
+  const [featureStock, setFeatureStock] = useState(0);
+  const [requiredCapabilityForFeature, setRequiredCapabilityForFeature] = useState(10);
+  const [infrastructureStock, setInfrastructureStock] = useState(0);
+  const [requiredCapabilityForInfrastructure, setRequiredCapabilityForInfrastructure] = useState(50);
+  const [customerSatisfactionStock, setCustomerSatisfactionStock] = useState(74);
+
+  const featureStockLevelUpHandler = () => {
+    if (capabilityStock >= requiredCapabilityForFeature) {
+      setFeatureStock(featureStock + 1)
+      setCapabilityStock(capabilityStock - requiredCapabilityForFeature);
+      runFeatureStockFeedbackLoopCalculations()
+    }
+  }
+
+  const runFeatureStockFeedbackLoopCalculations = () => {
+    setCapabilityStockClickRequirement(Math.round(capabilityStockClickRequirement + (featureStock * 1.8)));
+    setCustomerSatisfactionStock(customerSatisfactionStock + 10);
+  }
+
+  const capabilityStockLevelUpHandler = (event) => {
+    setCapabilityStock(capabilityStock + 1)
+  }
+
   return (
     <main className="flow-layout">
+      <CustomerSatisfactionStock key="customer-satisfaction" value={customerSatisfactionStock} />
       <ValueStock
+        key="feature"
         {...valueStockMetadata["feature"]}
-        currentValue={5}
-        requiredCapability={3}
+        currentValue={featureStock}
+        requiredCapability={requiredCapabilityForFeature}
+        levelUpHandler={featureStockLevelUpHandler}
       />
-      <CapabilityStock value={5} numberOfClicksPerStockIncrease={3} />
+      <CapabilityStock key="capability" value={capabilityStock} 
+                       numberOfClicksPerStockIncrease={capabilityStockClickRequirement} 
+                       capabilityStockHandler={capabilityStockLevelUpHandler} />
       <ValueStock
+        key="infrastructure"
         {...valueStockMetadata["infrastructure"]}
-        currentValue={0}
-        requiredCapability={3}
+        currentValue={infrastructureStock}
+        requiredCapability={requiredCapabilityForInfrastructure}
       />
-      <CustomerSatisfactionStock value={74} />
     </main>
   );
 };

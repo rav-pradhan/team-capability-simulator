@@ -4,7 +4,7 @@ import SimulatorOverview from "./SimulatorOverview";
 import SystemSimulator from "./SystemSimulator";
 
 const App = () => {
-  const [displayingOverview, setDisplayingOverview] = useState(true);
+  const [displayingOverview, setDisplayingOverview] = useState(false);
 
   const displayOverviewText = () => {
     return (

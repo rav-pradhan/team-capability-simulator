@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 
-const CapabilityStock = ({value = 0, numberOfClicksPerStockIncrease = 1}) => {
+const CapabilityStock = ({value = 0, numberOfClicksPerStockIncrease = 1, capabilityStockHandler}) => {
     const [computedValue, setComputedValue] = useState(value);
     const [clickCount, setClickCount] = useState(0)
 
@@ -10,11 +10,16 @@ const CapabilityStock = ({value = 0, numberOfClicksPerStockIncrease = 1}) => {
     }
 
     useEffect(() => {
+        setComputedValue(value);
+    }, [value])
+
+    useEffect(() => {
         if (clickCount === numberOfClicksPerStockIncrease) {
             setClickCount(0);
             setComputedValue(computedValue + 1)
+            capabilityStockHandler(this)
         }
-    }, [computedValue, clickCount, numberOfClicksPerStockIncrease])
+    }, [computedValue, clickCount, numberOfClicksPerStockIncrease, capabilityStockHandler])
 
     const renderClickDifferentialText = () => {
         const differenceBetweenCurrentAndRequiredClicks = numberOfClicksPerStockIncrease - clickCount

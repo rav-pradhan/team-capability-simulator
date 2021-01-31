@@ -16,14 +16,14 @@ describe("Capability Stock", () => {
   });
 
   test("that the capability stock value increments on click", () => {
-    render(<CapabilityStock value={2} numberOfClicksPerStockIncrease={1} />);
+    render(<CapabilityStock value={2} numberOfClicksPerStockIncrease={1} capabilityStockHandler={jest.fn()} />);
     fireEvent.click(screen.getByText(/Capability Stock/i));
     const value = screen.getByText(/3/);
     expect(value).toBeInTheDocument();
   });
 
   test("that the capability stock value increments when it reaches click threshold", () => {
-    render(<CapabilityStock value={10} numberOfClicksPerStockIncrease={3} />);
+    render(<CapabilityStock value={10} numberOfClicksPerStockIncrease={3} capabilityStockHandler={jest.fn()} />);
     fireEvent.click(screen.getByText(/Capability Stock/i));
     fireEvent.click(screen.getByText(/Capability Stock/i));
     fireEvent.click(screen.getByText(/Capability Stock/i));

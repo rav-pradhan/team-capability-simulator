@@ -1,11 +1,17 @@
-const ValueStock = ({name = "", currentValue = 0, requiredCapability = 1, styleModifier = "capability", description = ""}) => {
+import { useEffect } from "react"
 
+const ValueStock = ({name = "", currentValue = 0, requiredCapability = 1, styleModifier = "capability", description = "", levelUpHandler}) => {
+  
   const pluraliseCapabilityPoints = () => {
     return requiredCapability > 1 ? "Capability Points" : "Capability Point"
   }
 
+  useEffect(() => {
+    // triggers re-render; find less hacky solution
+  }, [currentValue])
+
   return (
-    <button type="button" className={`stock stock--${styleModifier}`}>
+    <button type="button" className={`stock stock--${styleModifier}`} onClick={() => levelUpHandler()}>
       <h2>{currentValue}</h2>
       <h3>{name}</h3>
       <p>{description}</p>
