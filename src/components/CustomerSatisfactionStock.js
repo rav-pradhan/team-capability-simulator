@@ -8,28 +8,32 @@ const CustomerSatisfactionStock = ({ value = 74 }) => {
   ] = useState("Neutral");
 
   useEffect(() => {
+    setComputedValue(value);
+  }, [value]);
+
+  useEffect(() => {
     const calculateSatisfactionDescription = () => {
       if (computedValue < 25) {
-        setDescriptiveSatisfactionScore("Very unhappy")
+        setDescriptiveSatisfactionScore("Very unhappy");
       } else if (computedValue < 50) {
-        setDescriptiveSatisfactionScore("Unhappy")
+        setDescriptiveSatisfactionScore("Unhappy");
       } else if (computedValue < 75) {
-        setDescriptiveSatisfactionScore("Neutral")
+        setDescriptiveSatisfactionScore("Neutral");
       } else if (computedValue < 100) {
-        setDescriptiveSatisfactionScore("Happy")
+        setDescriptiveSatisfactionScore("Happy");
       } else {
-        setDescriptiveSatisfactionScore("Ecstatic")
+        setDescriptiveSatisfactionScore("Ecstatic");
       }
     };
 
     const triggerGameOver = () => {
-      console.log("Game over!")
-    }
+      console.log("Game over!");
+    };
 
     const interval = setInterval(() => {
       if (computedValue === 0) {
-        triggerGameOver()
-        return
+        triggerGameOver();
+        return;
       }
       setComputedValue(computedValue - 1);
       calculateSatisfactionDescription(computedValue);
@@ -38,7 +42,11 @@ const CustomerSatisfactionStock = ({ value = 74 }) => {
   }, [value, computedValue]);
 
   return (
-    <button type="button" className="stock stock--customer-satisfaction" disabled>
+    <button
+      type="button"
+      className="stock stock--customer-satisfaction"
+      disabled
+    >
       <h2>{descriptiveSatisfactionScore}</h2>
       <h3>Customer Satisfaction</h3>
       <p>How satisfied your customers are with your product</p>

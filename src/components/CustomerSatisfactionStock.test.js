@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 import CustomerSatisfactionStock from "./CustomerSatisfactionStock";
 
