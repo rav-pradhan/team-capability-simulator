@@ -53,6 +53,15 @@
   padding: var(--s-1) 0;
 }
 
+.overview-button {
+  width: 20vw;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: var(--capability-colour);
+  color: white;
+  font-size: var(--s1);
+}
+
 .overview__capability {
   color: var(--capability-colour);
 }
@@ -94,22 +103,13 @@
 }
 
 .stock {
+  position: relative;
   background-color: var(--background-colour);
   color: var(--font-colour-light);
   padding: var(--s1);
   font-size: var(--s0);
   border: none;
   border-radius: 8px;
-}
-
-.stock::after {
-  color: red;
-  border: 2px solid red;
-  /* position: absolute; */
-  width: 50px;
-  height: 50px;
-  top: 50px;
-  background-color: red;
 }
 
 .stock > * + * {

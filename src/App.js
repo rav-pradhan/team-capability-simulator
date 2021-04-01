@@ -4,13 +4,13 @@ import SimulatorOverview from "./SimulatorOverview";
 import SystemSimulator from "./SystemSimulator";
 
 const App = () => {
-  const [displayingOverview, setDisplayingOverview] = useState(false);
+  const [displayingOverview, setDisplayingOverview] = useState(true);
 
   const displayOverviewText = () => {
     return (
       <main className="overview">
         <SimulatorOverview />
-        <button type="button" onClick={() => setDisplayingOverview(false)}>Let's play!</button>
+        <button type="button" className="overview-button" onClick={() => setDisplayingOverview(false)}>Let's play!</button>
       </main>
     );
   };

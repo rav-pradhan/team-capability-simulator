@@ -3,43 +3,29 @@ import CapabilityStock from "./components/CapabilityStock";
 import ValueStock from "./components/ValueStock";
 import CustomerSatisfactionStock from "./components/CustomerSatisfactionStock";
 
-const valueStockMetadata = {
-  feature: {
-    name: "Feature",
-    description: "The amount of value-adding features in your software",
-    styleModifier: "feature",
-  },
-  infrastructure: {
-    name: "Infrastructure",
-    description:
-      "The maturity of your infrastructure, team collaboration, removing tech debt etc.",
-    styleModifier: "infrastructure",
-  },
-};
-
-const infrastructureLevels = {
-  1: 30,
-  2: 80,
-  3: 150,
-  4: 200,
-}
+import infrastructureLevels from './domain/infrastructureLevels'
+import valueStockMetadata from './domain/valueStockMetadata'
 
 const SystemSimulator = () => {
-  const [capabilityStock, setCapabilityStock] = useState(10);
+  const [capabilityStock, setCapabilityStock] = useState(0);
   const [capabilityStockClickRequirement, setCapabilityStockClickRequirement] = useState(3)
   const [featureStock, setFeatureStock] = useState(0);
-  const [requiredCapabilityForFeature, setRequiredCapabilityForFeature] = useState(10);
+  const [requiredCapabilityForFeature, setRequiredCapabilityForFeature] = useState(4);
   const [infrastructureStock, setInfrastructureStock] = useState(0);
   const [requiredCapabilityForInfrastructure, setRequiredCapabilityForInfrastructure] = useState(infrastructureLevels[1]);
-  const [customerSatisfactionStock, setCustomerSatisfactionStock] = useState(55);
+  const [customerSatisfactionStock, setCustomerSatisfactionStock] = useState(50);
 
   const featureStockLevelUpHandler = () => {
     if (capabilityStock >= requiredCapabilityForFeature) {
-      setFeatureStock(featureStock + 1)
-      setCapabilityStock(capabilityStock - requiredCapabilityForFeature);
-      setRequiredCapabilityForFeature(Math.round(requiredCapabilityForFeature + (capabilityStockClickRequirement * 0.6)))
-      runFeatureStockFeedbackLoopCalculations()
+      handleStockAdjustments()
     }
+  }
+
+  const handleStockAdjustments = () => {
+    setFeatureStock(featureStock + 1)
+    setCapabilityStock(capabilityStock - requiredCapabilityForFeature);
+    setRequiredCapabilityForFeature(Math.round(requiredCapabilityForFeature + (capabilityStockClickRequirement * 0.6)))
+    runFeatureStockFeedbackLoopCalculations()
   }
 
   const runFeatureStockFeedbackLoopCalculations = () => {
@@ -53,15 +39,19 @@ const SystemSimulator = () => {
 
   const infrastructureStockLevelUpHandler = () => {
     if (capabilityStock >= requiredCapabilityForFeature) {
-      setInfrastructureStock(infrastructureStock + 1)
-      setCapabilityStock(capabilityStock - requiredCapabilityForInfrastructure);
-      setRequiredCapabilityForInfrastructure(infrastructureLevels[infrastructureStock + 1])
-      runInfrastructuretockFeedbackLoopCalculations()
+      handleInfrastructureStockAdjustments()
     }
   }
 
+  const handleInfrastructureStockAdjustments = () => {
+    setInfrastructureStock(infrastructureStock + 1)
+    setCapabilityStock(capabilityStock - requiredCapabilityForInfrastructure);
+    setRequiredCapabilityForInfrastructure(infrastructureLevels[infrastructureStock + 1])
+    runInfrastructuretockFeedbackLoopCalculations()
+  }
+
   const runInfrastructuretockFeedbackLoopCalculations = () => {
-    const capabilityClickValue =capabilityStockClickRequirement - (infrastructureStock * 3) <= 1 ? 1 : Math.round(capabilityStockClickRequirement - (infrastructureStock * 3))
+    const capabilityClickValue = capabilityStockClickRequirement - (infrastructureStock * 3) <= 1 ? 1 : Math.round(capabilityStockClickRequirement - (infrastructureStock * 3))
     setCapabilityStockClickRequirement(capabilityClickValue);
     setRequiredCapabilityForFeature(Math.round(requiredCapabilityForFeature * 0.66))
     setCustomerSatisfactionStock(customerSatisfactionStock + 5);
@@ -78,8 +68,8 @@ const SystemSimulator = () => {
         levelUpHandler={featureStockLevelUpHandler}
       />
       <CapabilityStock key="capability" value={capabilityStock}
-                       numberOfClicksPerStockIncrease={capabilityStockClickRequirement}
-                       capabilityStockHandler={capabilityStockLevelUpHandler} />
+        numberOfClicksPerStockIncrease={capabilityStockClickRequirement}
+        capabilityStockHandler={capabilityStockLevelUpHandler} />
       <ValueStock
         key="infrastructure"
         {...valueStockMetadata["infrastructure"]}
